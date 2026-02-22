@@ -19,6 +19,13 @@ public class Vehicle {
     public Vehicle() {
     }
 
+    public Vehicle( String plate, String model, Integer yearOfManufacture, Integer mileage) {
+        this.plate = plate;
+        this.model = model;
+        this.yearOfManufacture = yearOfManufacture;
+        this.mileage = mileage;
+    }
+
     public Vehicle(Integer id, String plate, String model, Integer yearOfManufacture, Integer mileage) {
         this.id = id;
         this.plate = plate;
