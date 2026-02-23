@@ -1,5 +1,6 @@
 package br.com.cazzine.fleet_api.dto;
 
+import br.com.cazzine.fleet_api.model.Department;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -11,16 +12,18 @@ public class VehicleResponseDTO {
     private String model;
     private Integer yearOfManufacture;
     private Integer mileage;
+    private String departmentName;
 
     public VehicleResponseDTO() {
     }
 
-    public VehicleResponseDTO(Integer id, String plate, String model, Integer yearOfManufacture, Integer mileage) {
+    public VehicleResponseDTO(Integer id, String plate, String model, Integer yearOfManufacture, Integer mileage, String departmentName) {
         this.id = id;
         this.plate = plate;
         this.model = model;
         this.yearOfManufacture = yearOfManufacture;
         this.mileage = mileage;
+        this.departmentName = departmentName;
     }
 
     public Integer getId() {
@@ -61,5 +64,13 @@ public class VehicleResponseDTO {
 
     public void setMileage(Integer mileage) {
         this.mileage = mileage;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 }

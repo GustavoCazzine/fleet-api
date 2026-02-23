@@ -1,8 +1,11 @@
 package br.com.cazzine.fleet_api.service;
 
 import br.com.cazzine.fleet_api.dto.VehicleRequestDTO;
+import br.com.cazzine.fleet_api.exceptions.DepartmentNotFoundException;
 import br.com.cazzine.fleet_api.exceptions.VehicleNotFoundException;
+import br.com.cazzine.fleet_api.model.Department;
 import br.com.cazzine.fleet_api.model.Vehicle;
+import br.com.cazzine.fleet_api.repository.DepartmentRepository;
 import br.com.cazzine.fleet_api.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +16,23 @@ import java.util.List;
 public class VehicleService {
     @Autowired
     private VehicleRepository repository;
+    @Autowired
+    private DepartmentRepository departmentRepo;
 
     public Vehicle addVehicle(VehicleRequestDTO vehicle){
-        return repository.save(new Vehicle(
+        Department departmentFound = departmentRepo.findById(vehicle.getDepartmentId()).orElseThrow(() -> new DepartmentNotFoundException("Departamento não encontrado."));
+
+        Vehicle newVehicle = new Vehicle(
                 vehicle.getPlate(),
                 vehicle.getModel(),
                 vehicle.getYearOfManufacture(),
                 vehicle.getMileage()
-                ));
+        );
+
+        newVehicle.setDepartment(departmentFound);
+
+        return repository.save(newVehicle);
+
     }
 
     public List<Vehicle> findAllVehicles(){

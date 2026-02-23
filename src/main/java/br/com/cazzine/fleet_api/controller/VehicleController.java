@@ -6,7 +6,6 @@ import br.com.cazzine.fleet_api.model.Vehicle;
 import br.com.cazzine.fleet_api.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +18,18 @@ public class VehicleController {
 
     @PostMapping
     public VehicleResponseDTO addVehicle(@RequestBody @Valid VehicleRequestDTO newVehicle){
-        Vehicle newVeh = (service.addVehicle(newVehicle));
+        Vehicle newVeh = service.addVehicle(newVehicle);
 
-        return new VehicleResponseDTO(newVeh.getId(), newVeh.getPlate(), newVeh.getModel(), newVeh.getYearOfManufacture(), newVeh.getMileage());
-    };
+        // Correção: pegando o getName() do departamento
+        return new VehicleResponseDTO(
+                newVeh.getId(),
+                newVeh.getPlate(),
+                newVeh.getModel(),
+                newVeh.getYearOfManufacture(),
+                newVeh.getMileage(),
+                newVeh.getDepartment().getName()
+        );
+    }
 
     @GetMapping
     public List<VehicleResponseDTO> allVehicles(){
@@ -34,7 +41,8 @@ public class VehicleController {
                         vehicle.getPlate(),
                         vehicle.getModel(),
                         vehicle.getYearOfManufacture(),
-                        vehicle.getMileage()
+                        vehicle.getMileage(),
+                        vehicle.getDepartment().getName() // Correção aqui
                 ))
                 .toList();
     }
@@ -48,7 +56,9 @@ public class VehicleController {
                 vehicleFound.getPlate(),
                 vehicleFound.getModel(),
                 vehicleFound.getYearOfManufacture(),
-                vehicleFound.getMileage());
+                vehicleFound.getMileage(),
+                vehicleFound.getDepartment().getName() // Parêntese arrumado!
+        );
     }
 
     @PutMapping("/{id}")
@@ -60,7 +70,9 @@ public class VehicleController {
                 editVehicle.getPlate(),
                 editVehicle.getModel(),
                 editVehicle.getYearOfManufacture(),
-                editVehicle.getMileage());
+                editVehicle.getMileage(),
+                editVehicle.getDepartment().getName() // Parêntese arrumado!
+        );
     }
 
     @DeleteMapping("/{id}")

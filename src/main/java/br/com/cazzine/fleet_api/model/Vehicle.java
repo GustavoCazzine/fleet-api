@@ -1,9 +1,6 @@
 package br.com.cazzine.fleet_api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Vehicle {
@@ -15,6 +12,9 @@ public class Vehicle {
     private String model;
     private Integer yearOfManufacture;
     private Integer mileage;
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     public Vehicle() {
     }
@@ -24,14 +24,16 @@ public class Vehicle {
         this.model = model;
         this.yearOfManufacture = yearOfManufacture;
         this.mileage = mileage;
+        this.department = department;
     }
 
-    public Vehicle(Integer id, String plate, String model, Integer yearOfManufacture, Integer mileage) {
+    public Vehicle(Integer id, String plate, String model, Integer yearOfManufacture, Integer mileage, Department department) {
         this.id = id;
         this.plate = plate;
         this.model = model;
         this.yearOfManufacture = yearOfManufacture;
         this.mileage = mileage;
+        this.department = department;
     }
 
     public Integer getId() {
@@ -72,5 +74,13 @@ public class Vehicle {
 
     public void setMileage(Integer mileage) {
         this.mileage = mileage;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

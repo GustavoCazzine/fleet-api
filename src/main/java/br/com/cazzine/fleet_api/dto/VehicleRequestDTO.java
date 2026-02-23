@@ -1,5 +1,6 @@
 package br.com.cazzine.fleet_api.dto;
 
+import br.com.cazzine.fleet_api.model.Department;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -21,14 +22,18 @@ public class VehicleRequestDTO {
     @PositiveOrZero(message = "A quilometragem tem que ser maior ou igual a zero")
     private Integer mileage;
 
+    @NotNull(message = "O ID do departamento é obrigatório")
+    private Integer departmentId;
+
     public VehicleRequestDTO() {
     }
 
-    public VehicleRequestDTO(String plate, String model, Integer yearOfManufacture, Integer mileage) {
+    public VehicleRequestDTO(String plate, String model, Integer yearOfManufacture, Integer mileage, Integer departmentId) {
         this.plate = plate;
         this.model = model;
         this.yearOfManufacture = yearOfManufacture;
         this.mileage = mileage;
+        this.departmentId = departmentId;
     }
 
     public String getPlate() {
@@ -61,5 +66,13 @@ public class VehicleRequestDTO {
 
     public void setMileage(Integer mileage) {
         this.mileage = mileage;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 }
